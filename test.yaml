@@ -29,15 +29,10 @@ paths:
           name: ESLAM-AUTH
           schema:
             type: string
+          required: true
       responses:
         '200':
           description: get all users
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/users'
         '403':
           description: Forbedin
         '400':
@@ -54,21 +49,19 @@ paths:
           name: ESLAM-AUTH
           schema:
             type: string
+          required: true
         - in: path
           name: userId
           schema:
             type: string
           required: true
-          description: Numeric ID of the user to delete
       responses:
         '200':
           description: delete users
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/users'
         '400':
           description: bad input parameter
+        '403':
+          description: Forbedin
     patch:
       tags:
         - users
@@ -80,22 +73,93 @@ paths:
           name: ESLAM-AUTH
           schema:
             type: string
+          required: true
         - in: path
           name: userId
           schema:
             type: string
           required: true
-          description: Numeric ID of the user to delete
+      requestBody:
+        description: put the username to update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+              required:
+                - username
       responses:
         '200':
           description: delete users
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/users'
         '400':
           description: bad input parameter
-
+        '403':
+          description: Forbedin
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: register
+      operationId: register
+      description: register
+      requestBody:
+        description: put the register data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - username
+                - password
+      responses:
+        '200':
+          description: register
+        '403':
+          description: Forbedin
+        '400':
+          description: bad input parameter
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: login
+      operationId: login
+      description: login
+      requestBody:
+        description: put the login data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: register
+        '403':
+          description: Forbedin
+        '400':
+          description: bad input parameter
+        
 components:
   schemas:
     users:

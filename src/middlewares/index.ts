@@ -11,15 +11,15 @@ export const isAuthenticated = async (
   try {
     const sessionToken = req.cookies["ESLAM-AUTH"];
 
-    console.log(sessionToken);
-
+    
     if (!sessionToken) {
       return res.sendStatus(403);
     }
-
+    
     const existingUser = await getUserBySessionToken(sessionToken);
-
+    
     if (!existingUser) {
+      console.log(sessionToken);
       return res.sendStatus(403);
     }
 
