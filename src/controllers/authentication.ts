@@ -34,7 +34,7 @@ export const login = async (req: express.Request, res: express.Response) => {
     await user.save();
 
     res.cookie("ESLAM-AUTH", user.authentication.sessionToken, {
-      domain: "localhost",
+      domain: "https://node-mongo-rest-api-test.onrender.com",
       path: "/",
     });
 
