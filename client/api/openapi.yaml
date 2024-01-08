@@ -1,0 +1,185 @@
+openapi: 3.0.0
+info:
+  title: Simple node mongodb rest api test
+  description: "This is a simple testing API for login and regester and create , update\
+    \ , delete , read"
+  contact:
+    email: eslamreda542@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://node-mongo-rest-api-test.onrender.com
+  description: node-mongo-rest-api-test
+tags:
+- name: users
+  description: crud api for users
+- name: auth
+  description: login and regester api
+paths:
+  /users:
+    get:
+      tags:
+      - users
+      summary: get all users
+      description: get all users
+      operationId: getUsers
+      parameters:
+      - name: ESLAM-AUTH
+        in: cookie
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: get all users
+        "400":
+          description: bad input parameter
+        "403":
+          description: Forbedin
+      x-swagger-router-controller: Users
+  /users/{userId}:
+    delete:
+      tags:
+      - users
+      summary: delete user
+      description: delete User
+      operationId: deleteUser
+      parameters:
+      - name: ESLAM-AUTH
+        in: cookie
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: delete users
+        "400":
+          description: bad input parameter
+        "403":
+          description: Forbedin
+      x-swagger-router-controller: Users
+    patch:
+      tags:
+      - users
+      summary: update user
+      description: update User
+      operationId: updateUser
+      parameters:
+      - name: ESLAM-AUTH
+        in: cookie
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: put the username to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users_userId_body'
+        required: true
+      responses:
+        "200":
+          description: delete users
+        "400":
+          description: bad input parameter
+        "403":
+          description: Forbedin
+      x-swagger-router-controller: Users
+  /auth/register:
+    post:
+      tags:
+      - auth
+      summary: register
+      description: register
+      operationId: register
+      requestBody:
+        description: put the register data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/auth_register_body'
+        required: true
+      responses:
+        "200":
+          description: register
+        "400":
+          description: bad input parameter
+        "403":
+          description: Forbedin
+      x-swagger-router-controller: Auth
+  /auth/login:
+    post:
+      tags:
+      - auth
+      summary: login
+      description: login
+      operationId: login
+      requestBody:
+        description: put the login data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/auth_login_body'
+        required: true
+      responses:
+        "200":
+          description: register
+        "400":
+          description: bad input parameter
+        "403":
+          description: Forbedin
+      x-swagger-router-controller: Auth
+components:
+  schemas:
+    users_userId_body:
+      required:
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+    auth_register_body:
+      required:
+      - email
+      - password
+      - username
+      type: object
+      properties:
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+    auth_login_body:
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
