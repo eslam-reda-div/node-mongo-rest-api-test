@@ -1,0 +1,120 @@
+openapi: 3.0.0
+servers:
+  - description: node-mongo-rest-api-test
+    url: https://node-mongo-rest-api-test.onrender.com
+info:
+  description: This is a simple testing API for login and regester and create , update , delete , read
+  version: "1.0.0"
+  title: Simple node mongodb rest api test
+  contact:
+    email: eslamreda542@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: users
+    description: crud api for users
+  - name: auth
+    description: login and regester api
+paths:
+  /users:
+    get:
+      tags:
+        - users
+      summary: get all users
+      operationId: getUsers
+      description: get all users
+      parameters:
+        - in: cookie
+          name: ESLAM-AUTH
+          schema:
+            type: string
+      responses:
+        '200':
+          description: get all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/users'
+        '403':
+          description: Forbedin
+        '400':
+          description: bad input parameter
+  /users/{userId}:
+    delete:
+      tags:
+        - users
+      summary: delete user
+      operationId: deleteUser
+      description: delete User
+      parameters:
+        - in: cookie
+          name: ESLAM-AUTH
+          schema:
+            type: string
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: Numeric ID of the user to delete
+      responses:
+        '200':
+          description: delete users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users'
+        '400':
+          description: bad input parameter
+    patch:
+      tags:
+        - users
+      summary: update user
+      operationId: updateUser
+      description: update User
+      parameters:
+        - in: cookie
+          name: ESLAM-AUTH
+          schema:
+            type: string
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: Numeric ID of the user to delete
+      responses:
+        '200':
+          description: delete users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users'
+        '400':
+          description: bad input parameter
+
+components:
+  schemas:
+    users:
+      type: object
+      required:
+        - _id
+        - email
+        - username
+        - __v
+      properties:
+        _id:
+          type: string
+          example: d701748f0851
+        email:
+          type: string
+          example: eslamreda542@gmail.com
+        username:
+          type: string
+          example: 'eslam'
+        __v:
+          type: number
+          example: 0

@@ -6,6 +6,8 @@ export const getAllUsers = async (req: express.Request, res: express.Response) =
   try {
     const users = await getUsers();
 
+    console.log(users);
+
     return res.status(200).json(users);
   } catch (error) {
     console.log(error);
@@ -16,6 +18,8 @@ export const getAllUsers = async (req: express.Request, res: express.Response) =
 export const deleteUser = async (req: express.Request, res: express.Response) => {
   try {
     const { id } = req.params;
+
+    console.log(id)
 
     const deletedUser = await deleteUserById(id);
 
@@ -30,6 +34,8 @@ export const updateUser = async (req: express.Request, res: express.Response) =>
   try {
     const { id } = req.params;
     const { username } = req.body;
+
+    console.log(id , username);
 
     if (!username) {
       return res.sendStatus(400);

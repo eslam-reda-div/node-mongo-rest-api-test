@@ -11,6 +11,8 @@ export const isAuthenticated = async (
   try {
     const sessionToken = req.cookies["ESLAM-AUTH"];
 
+    console.log(sessionToken);
+
     if (!sessionToken) {
       return res.sendStatus(403);
     }
@@ -39,6 +41,7 @@ export const isOwner = async (
     const { id } = req.params;
     const currentUserId = get(req, "identity._id") as string;
 
+    console.log(id , currentUserId);
     if (!currentUserId) {
       return res.sendStatus(400);
     }
